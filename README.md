@@ -35,3 +35,7 @@ Right-after image
 The contours_in_contours algorithm adopts a modified version of the [Scan-flood Fill (SCAFF)](https://github.com/SherylHYX/Scan-flood-Fill) algorithm.
 
 ### save directory
+
+## Authors
+
+* **Nergis Tomen** - [github](https://github.com/ntomen)
