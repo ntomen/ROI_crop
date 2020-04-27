@@ -12,6 +12,11 @@ If you use the contents of this repository, please give credit to this github pa
 - PIL/pillow
 - numpy
 
+## 2 How it works
 The python script is meant to be placed in a directory with multiple annotated biomedical images in .tif/.tiff format, with red lines encircling regions of interest (ROIs). Running the script will crop out each ROI into its own .tif image against a white/transparent background.
 
-https://github.com/SherylHYX/Scan-flood-Fill
+Standard work flow:
+Left-before image
+Right-after image
+
+The contours_in_contours algorithm adopts a modified version of the [Scan-flood Fill (SCAFF)](https://github.com/SherylHYX/Scan-flood-Fill) algorithm.
