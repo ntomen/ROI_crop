@@ -9,8 +9,8 @@ If you use the contents of this repository, please give credit to this github pa
 - Python installation (tested mainly on python 3, but should work with python 2)
 - argparse
 - OpenCV
-- PIL/pillow
-- numpy
+- PIL/Pillow
+- NumPy
 
 ## 2 How it works
 The python script is meant to be placed in a directory with multiple annotated biomedical images in .tif/.tiff format, with red lines encircling regions of interest (ROIs). Running the script will crop out each ROI into its own .tif image against a white/transparent background.
