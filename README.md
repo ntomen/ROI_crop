@@ -36,6 +36,8 @@ The contours_in_contours algorithm adopts a modified version of the [Scan-flood 
 
 ### save directory
 
+## 4. Setup & Usage Directions
+
 ## Authors
 
 * **Nergis Tomen** - [github](https://github.com/ntomen)
