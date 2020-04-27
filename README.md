@@ -19,4 +19,19 @@ Standard work flow:
 Left-before image
 Right-after image
 
+Describe how it should be run.
+
+## 3 Optional input arguments
+
+### bg_opacity
+Standard work flow:
+Left-before image
+Right-after image
+
+### contours in contours
+Standard work flow:
+Left-before image
+Right-after image
 The contours_in_contours algorithm adopts a modified version of the [Scan-flood Fill (SCAFF)](https://github.com/SherylHYX/Scan-flood-Fill) algorithm.
+
+### save directory
