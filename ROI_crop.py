@@ -1,8 +1,3 @@
-# TO DO:
-# Loop over more images
-# Add more explanatory text
-# Remove other printing from c_in_c blocks etc.
-
 # Preamble
 from __future__ import division, print_function
 import argparse
@@ -36,6 +31,8 @@ parser.add_argument('--bg_color',nargs='+',type=int,default=None,
                     'The option --bg_color should be followed by 3 integer '+\
                     'values in range [0,255]. Default: white/[255,255,255].')
 args=parser.parse_args()
+#--------------------------------------------------------------------
+# Sanity check & warnings
 if args.bg_color is not None:
     assert type(args.bg_color)==list
     assert len(args.bg_color)==3
@@ -65,151 +62,165 @@ file_names=[]
 for file in os.listdir():
     if file.endswith('.tif') or file.endswith('.tiff'):
         file_names.append(file)
+print('Detected '+str(len(file_names))+' TIFF files in current directory: '+\
+      str(os.getcwd()))
+print('Starting to crop...')
 #--------------------------------------------------------------------
 # Create save directory
 if not os.path.exists(args.save_dir):
     os.makedirs(args.save_dir)
 #--------------------------------------------------------------------
-# Load the image
-im=Image.open(file_names[0])
-imarray=np.array(im)
-#--------------------------------------------------------------------
-# Extract the red contour lines
-# Encoding RGB, dim 0 = R
-is_red=imarray[:,:,0]>245
-is_not_green=imarray[:,:,1]<10
-is_not_blue=imarray[:,:,2]<10
-is_contour=np.logical_and(np.logical_and(is_red,is_not_green),is_not_blue)
-
-mask_contour=np.zeros_like(imarray[:,:,0])
-mask_contour[is_contour]=1
-del is_not_blue, is_not_green, is_red, is_contour
-#--------------------------------------------------------------------
-if args.contours_in_contours:
-    colorThreshold = 5
-
-    def pad_with(vector, pad_width, iaxis, kwargs):
-        pad_value = kwargs.get('padder', 0)
-        vector[:pad_width[0]] = pad_value
-        vector[-pad_width[1]:] = pad_value
-        return vector
-
-    def justPad(img, backGroundColour):
-        padImg = np.pad(img,1,pad_with,padder=backGroundColour)
-        height, width = padImg.shape[:2]
-        return padImg, height, width
-
-    def cropAndReverse(img, height, width, backGroundColor, labelColor, fillColor, maskColor):
-        croppedImg = np.delete((np.delete(img, [0, width-1], axis=1)), [0, height-1], axis=0)
-        # label is the color that is temporarily used to fill exterior
-        croppedImg[croppedImg==labelColor]=backGroundColor
-        croppedImg[croppedImg==fillColor]=maskColor
-        return croppedImg
-
-    def cvFloodFill(img, height, width, seedPosition, fillColor):
-        mask = np.zeros([height+2, width +2], np.uint8)
-        cv2.floodFill(img, mask, seedPosition, newVal = fillColor, loDiff = 50, upDiff = 50, flags = 4)
-
-    def holesInHoles(imgPath, backGroundColor, boundaryColor, labelColor, fillColor, maskColor):
-        padImg, height, width = justPad(imgPath, backGroundColor)
-        print('Done with padding.')
-        seedPosition = (0, 0)
-        cvFloodFill(padImg, height, width, seedPosition, labelColor)
-        print('Done with first fill. Entering loop.')
-        for x in range(height):
-            if not np.any(padImg==backGroundColor):
-                break
-            y=np.argmax(padImg[x,:]<colorThreshold) # only works because BGclr=0
-            if y>0:
-                seedPosition=(y,x)
-                i=np.argmax(np.abs(np.flip(padImg[x,:y])-boundaryColor)>=colorThreshold)
-                if abs(padImg[x,y-i-1] - labelColor) < colorThreshold:
-                    cvFloodFill(padImg, height, width, seedPosition, fillColor)
-                else:
-                    cvFloodFill(padImg, height, width, seedPosition, labelColor)
-
-        resultImg=cropAndReverse(padImg, height, width, backGroundColor, labelColor, fillColor, maskColor)
-        return resultImg
-#--------------------------------------------------------------------
-if args.contours_in_contours:
-    boundaryColor=255
-    fillColor=128
-    labelColor=80
-    backGroundColor=0 # has to be 0, don't change
-    maskColor=255
-
-    start=time.clock()
-    mask_filled=holesInHoles(mask_contour*boundaryColor,backGroundColor,\
-                             boundaryColor,labelColor,fillColor,maskColor)
-    elapsed=(time.clock()-start)
-    print(elapsed)
-else:
-    _,_,mask_filled,_=cv2.floodFill(mask_contour,np.zeros((\
-                      mask_contour.shape[0]+2,mask_contour.shape[1]+2),\
-                      np.uint8),(0,0),None)
-    mask_filled=(-mask_filled[1:-1,1:-1]+1)*255
-#--------------------------------------------------------------------
-# Find connected components
-n_components,comp_filled,component_stats,_=cv2.connectedComponentsWithStats(\
-                                     mask_filled,connectivity=8)
-#--------------------------------------------------------------------
-# Set contour pixels to background color
-smooth_mask_contour=cv2.blur(mask_contour.astype(np.float),(3,3))
-smooth_mask_contour[smooth_mask_contour>0]=1
-smooth_mask_contour=smooth_mask_contour.astype(np.bool)
-if args.bg_opacity:
-    if args.bg_color is None:
-        for j in range(imarray.shape[-1]):
-            imarray[smooth_mask_contour,j]=255
-    else:
-        for j in range(imarray.shape[-1]):
-            imarray[smooth_mask_contour,j]=args.bg_color[j]
-#--------------------------------------------------------------------
-# Set background to white/transparent and save
-for i in range(1,n_components):
-    if args.bg_opacity:
-        # Setting color ch's
-        hc_filled=comp_filled.copy().astype(np.uint8)
-        hc_filled[hc_filled!=i]=0
-        
-        if args.bg_color is None:
-            src_mask=np.zeros((hc_filled.shape[0],hc_filled.shape[1],3))
-            for j in range(src_mask.shape[-1]):
-                src_mask[:,:,j]=hc_filled # mask to 3 ch image
-            
-            imarray_extract=imarray.copy()
-            imarray_extract[src_mask==0]=255
-        else:
-            imarray_extract=imarray.copy()
-            for j in range(imarray_extract.shape[-1]):
-                imarray_extract[hc_filled==0,j]=args.bg_color[j]
-    else:
-        # Setting alpha
-        # Create image with alpha channel
-        imarray_extract=cv2.cvtColor(imarray,cv2.COLOR_RGB2RGBA)
-        
-        hc_filled=comp_filled.copy().astype(np.uint8)
-        hc_filled[hc_filled!=i]=0
-        hc_filled[hc_filled==i]=1
-        
-        imarray_extract[:,:,3]=hc_filled
-        imarray_extract[:,:,3]*=(-smooth_mask_contour.astype(np.uint8)+1)
-        imarray_extract[:,:,3]*=255
-    # Crop
-    b=5 # white border pixel width
-    crop_save=imarray_extract[component_stats[i,1]-b:component_stats[i,1]+\
-                      component_stats[i,3]+b,\
-                      component_stats[i,0]-b:component_stats[i,0]+\
-                      component_stats[i,2]+b,:]
-
-    if args.bg_opacity:
-        crop_save=Image.fromarray(crop_save,'RGB')
-    else:
-        crop_save=Image.fromarray(crop_save,'RGBA')
-        
-    save_fname=file_names[0][:-4]+'_'+str(i)+'.tif'
-    save_path=os.path.join(os.getcwd(),args.save_dir,save_fname)
+tif_counter=0
+for file_name in file_names:
+    tif_counter+=1
+    print('Processing image '+str(tif_counter)+' of '+str(len(file_names)))
+    print('File name: '+file_name)
+    # Load the image
+    im=Image.open(file_name)
+    imarray=np.array(im)
+    if imarray.shape[-1]==4:
+        warnings.warn('Input image in RGBA format. Only the RGB dimensions '+\
+                      'will be used for processing. A dimension is discarded.')
+        imarray=imarray[:,:,:3]
+    if imarray.shape[-1]!=3:
+        raise NotImplementedError('The script can only process TIFF files '+\
+                        'in RGB or RGBA format. Please exclude other files '+\
+                        'from the working directory.')
+    #--------------------------------------------------------------------
+    # Extract the red contour lines
+    # Encoding RGB, dim 0 = R
+    is_red=imarray[:,:,0]>245
+    is_not_green=imarray[:,:,1]<10
+    is_not_blue=imarray[:,:,2]<10
+    is_contour=np.logical_and(np.logical_and(is_red,is_not_green),is_not_blue)
     
-    crop_save.save(save_path)
-
+    mask_contour=np.zeros_like(imarray[:,:,0])
+    mask_contour[is_contour]=1
+    del is_not_blue, is_not_green, is_red, is_contour
+    #--------------------------------------------------------------------
+    if args.contours_in_contours:
+        colorThreshold = 5
+    
+        def pad_with(vector, pad_width, iaxis, kwargs):
+            pad_value = kwargs.get('padder', 0)
+            vector[:pad_width[0]] = pad_value
+            vector[-pad_width[1]:] = pad_value
+            return vector
+    
+        def justPad(img, backGroundColour):
+            padImg = np.pad(img,1,pad_with,padder=backGroundColour)
+            height, width = padImg.shape[:2]
+            return padImg, height, width
+    
+        def cropAndReverse(img, height, width, backGroundColor, labelColor, fillColor, maskColor):
+            croppedImg = np.delete((np.delete(img, [0, width-1], axis=1)), [0, height-1], axis=0)
+            # label is the color that is temporarily used to fill exterior
+            croppedImg[croppedImg==labelColor]=backGroundColor
+            croppedImg[croppedImg==fillColor]=maskColor
+            return croppedImg
+    
+        def cvFloodFill(img, height, width, seedPosition, fillColor):
+            mask = np.zeros([height+2, width +2], np.uint8)
+            cv2.floodFill(img, mask, seedPosition, newVal = fillColor, loDiff = 50, upDiff = 50, flags = 4)
+    
+        def holesInHoles(imgPath, backGroundColor, boundaryColor, labelColor, fillColor, maskColor):
+            padImg, height, width = justPad(imgPath, backGroundColor)
+            seedPosition = (0, 0)
+            cvFloodFill(padImg, height, width, seedPosition, labelColor)
+            for x in range(height):
+                if not np.any(padImg==backGroundColor):
+                    break
+                y=np.argmax(padImg[x,:]<colorThreshold) # only works because BGclr=0
+                if y>0:
+                    seedPosition=(y,x)
+                    i=np.argmax(np.abs(np.flip(padImg[x,:y])-boundaryColor)>=colorThreshold)
+                    if abs(padImg[x,y-i-1] - labelColor) < colorThreshold:
+                        cvFloodFill(padImg, height, width, seedPosition, fillColor)
+                    else:
+                        cvFloodFill(padImg, height, width, seedPosition, labelColor)
+    
+            resultImg=cropAndReverse(padImg, height, width, backGroundColor, labelColor, fillColor, maskColor)
+            return resultImg
+    #--------------------------------------------------------------------
+    if args.contours_in_contours:
+        boundaryColor=255
+        fillColor=128
+        labelColor=80
+        backGroundColor=0 # has to be 0, don't change
+        maskColor=255
+    
+        start=time.clock()
+        mask_filled=holesInHoles(mask_contour*boundaryColor,backGroundColor,\
+                                 boundaryColor,labelColor,fillColor,maskColor)
+        elapsed=(time.clock()-start)
+        print('contours_in_contours algorithm took '+str(round(elapsed,4))+' seconds '+\
+              'to process image '+str(tif_counter)+' of '+str(len(file_names)))
+    else:
+        _,_,mask_filled,_=cv2.floodFill(mask_contour,np.zeros((\
+                          mask_contour.shape[0]+2,mask_contour.shape[1]+2),\
+                          np.uint8),(0,0),None)
+        mask_filled=(-mask_filled[1:-1,1:-1]+1)*255
+    #--------------------------------------------------------------------
+    # Find connected components
+    n_components,comp_filled,component_stats,_=cv2.connectedComponentsWithStats(\
+                                         mask_filled,connectivity=8)
+    #--------------------------------------------------------------------
+    # Set contour pixels to background color
+    smooth_mask_contour=cv2.blur(mask_contour.astype(np.float),(3,3))
+    smooth_mask_contour[smooth_mask_contour>0]=1
+    smooth_mask_contour=smooth_mask_contour.astype(np.bool)
+    if args.bg_opacity:
+        if args.bg_color is None:
+            for j in range(imarray.shape[-1]):
+                imarray[smooth_mask_contour,j]=255
+        else:
+            for j in range(imarray.shape[-1]):
+                imarray[smooth_mask_contour,j]=args.bg_color[j]
+    #--------------------------------------------------------------------
+    # Set background to white/transparent and save
+    for i in range(1,n_components):
+        if args.bg_opacity:
+            # Setting color ch's
+            hc_filled=comp_filled.copy().astype(np.uint8)
+            hc_filled[hc_filled!=i]=0
+            
+            if args.bg_color is None:
+                src_mask=np.zeros((hc_filled.shape[0],hc_filled.shape[1],3))
+                for j in range(src_mask.shape[-1]):
+                    src_mask[:,:,j]=hc_filled # mask to 3 ch image
+                
+                imarray_extract=imarray.copy()
+                imarray_extract[src_mask==0]=255
+            else:
+                imarray_extract=imarray.copy()
+                for j in range(imarray_extract.shape[-1]):
+                    imarray_extract[hc_filled==0,j]=args.bg_color[j]
+        else:
+            # Setting alpha
+            # Create image with alpha channel
+            imarray_extract=cv2.cvtColor(imarray,cv2.COLOR_RGB2RGBA)
+            
+            hc_filled=comp_filled.copy().astype(np.uint8)
+            hc_filled[hc_filled!=i]=0
+            hc_filled[hc_filled==i]=1
+            
+            imarray_extract[:,:,3]=hc_filled
+            imarray_extract[:,:,3]*=(-smooth_mask_contour.astype(np.uint8)+1)
+            imarray_extract[:,:,3]*=255
+        # Crop
+        b=5 # white border pixel width
+        crop_save=imarray_extract[component_stats[i,1]-b:component_stats[i,1]+\
+                          component_stats[i,3]+b,\
+                          component_stats[i,0]-b:component_stats[i,0]+\
+                          component_stats[i,2]+b,:]
+    
+        if args.bg_opacity:
+            crop_save=Image.fromarray(crop_save,'RGB')
+        else:
+            crop_save=Image.fromarray(crop_save,'RGBA')
+            
+        save_fname=file_name[:-4]+'_'+str(i)+'.tif'
+        save_path=os.path.join(os.getcwd(),args.save_dir,save_fname)
+        
+        crop_save.save(save_path)
 
