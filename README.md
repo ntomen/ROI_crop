@@ -23,7 +23,9 @@ Right-after image
 
 but also
 
-![Image after](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1.tif)
+![Image after](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1.png)
+
+![Image after2](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2.png)
 
 Describe how it should be run.
 
