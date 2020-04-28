@@ -82,6 +82,10 @@ or for a green background call
 
 Default value: white/[255,255,255].
 
+Default behaviour (white background) |  Black background|  Green background
+:----------------------------:|:-----------------------------:|:----:
+ ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2_bg_black.png) |    ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2_bg_green.png)
+ 
 ### save directory
 
 parser.add_argument('--save_dir',type=str,default='cropped_images',
