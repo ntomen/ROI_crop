@@ -19,7 +19,9 @@ Standard work flow:
 Left-before image
 Right-after image
 
-![Image before](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image.png "title-1") ![Image after](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1.png "title-2")
+Image before                   |             Image after
+:-----------------------------:|:-----------------------------:
+![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image.png "title-1") | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1.png "title-2")
 
 ![Image after2](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2.png)
 
