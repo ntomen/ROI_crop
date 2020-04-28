@@ -27,6 +27,10 @@ Working directory before running ROI_crop.py  |   Working directory after runnin
 :--------------------------------------------:|:----------------------------------------------:
 ![](https://github.com/ntomen/ROI_crop/blob/master/readme/dir_before.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/dir_after.png)
 
+The above example shows only one .tif file from which the ROIs are extracted but the script will loop through all images of the .tif/.tiff format in the directory where `ROI_crop.py` is placed, and crop out all the ROIs in a similar way.
+
+For non-default settings and detailed usage guidelines, please see the next sections about optional input arguments and setup & usage directions.
+
 ## 3. Optional input arguments
 
 ### bg_opacity
