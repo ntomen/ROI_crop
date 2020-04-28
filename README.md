@@ -44,4 +44,4 @@ The contours_in_contours algorithm adopts a modified version of the [Scan-flood 
 
 ## Authors
 
-* **Nergis Tomen** - <n.tomen@email.nl> [github](https://github.com/ntomen)
+* **Nergis Tomen** - [TU Delft](https://www.tudelft.nl/en/eemcs/the-faculty/departments/intelligent-systems/pattern-recognition-bioinformatics/computer-vision-lab/people/nergis-toemen/) - [github](https://github.com/ntomen)
