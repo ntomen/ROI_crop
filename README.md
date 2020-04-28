@@ -19,7 +19,7 @@ Standard work flow:
 Left-before image
 Right-after image
 
-![Image before](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image.tif)
+![Image before](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image.png)
 
 Describe how it should be run.
 
