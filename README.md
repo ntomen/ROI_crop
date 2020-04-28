@@ -3,7 +3,7 @@ For cropping out annotated ROIs, especially in bioimaging data marked by red ann
 
 Generically, the script found here may be used to crop out parts of any tif image circled by solid red lines (multiple crop-outs in multiple images supported). However, this repository was started to help with cropping out exported ROI annotations in [QuPath, the open source software for bioimage analysis](https://github.com/qupath/qupath). Therefore, the script here is intended to be used to crop out ROIs annotated by red lines in biomedical images saved in .tif/.tiff format.
 
-If you use the contents of this repository, please give credit to this github page.
+If you use the contents of this repository, please give credit to this github page and the authors.
 
 ## 1. Requirements
 - Python installation (tested mainly on python 3, but should work with python 2)
@@ -44,4 +44,4 @@ The contours_in_contours algorithm adopts a modified version of the [Scan-flood 
 
 ## Authors
 
-* **Nergis Tomen** - [github](https://github.com/ntomen)
+* **Nergis Tomen** - <n.tomen@email.nl> [github](https://github.com/ntomen)
