@@ -46,9 +46,7 @@ Therefore, by default the background is kept opaque. If instead it is desirable 
 
 Default value: True. Note: When set to False, the script will save the tif files in RGBA format (bit depth 32), instead of RGB (bit depth 24).')
 
-ROIs cropped onto a transparent background
-:------------------------------------------------------------:
-   Cropped ROI 1              |         Cropped ROI 2
+Cropped ROI 1 on transparent background |  Cropped ROI 2 onto transparent background
 :----------------------------:|:-----------------------------:
 ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1_transparent.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2_transparent.png) 
 	
