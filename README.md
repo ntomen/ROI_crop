@@ -66,6 +66,9 @@ Default value: `False`. By default the script will ignore annotations within the
 
 The contours_in_contours algorithm adopts a modified version of the [Scan-flood Fill (SCAFF)](https://github.com/SherylHYX/Scan-flood-Fill) algorithm.
 
+Original image |  Default behaviour|  contours_in_contours behaviour
+:----------------------------:|:-----------------------------:|:----:
+ ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_im_crop.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1.png) |    ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1_c_in_c.png)
 ### background color
 When the background color is opaque (`--bg_opacity=False`) the default behaviour is to set the background color to white. A different background color can be specified using the `--bg_color` option.
 
