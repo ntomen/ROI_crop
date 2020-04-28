@@ -22,7 +22,10 @@ Original image                 |         Cropped ROI 1        |         Cropped 
 ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2.png)
 
 Running the script with default options will take an original image , e.g. `original_image.tif`, and crop each of the ROIs into its individual tif file, with white background. By default a subdirectory called `cropped_images` will be created where the cropped images will be saved with the name of the original image file followed by the ROI index, e.g. `original_image_1.tif`.
-![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2.png)
+
+Working directory before running ROI_crop.py  |   Working directory after running ROI_crop.py        
+:--------------------------------------------:|:----------------------------------------------:
+![](https://github.com/ntomen/ROI_crop/blob/master/readme/dir_before.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/dir_after.png)
 
 ## 3. Optional input arguments
 
