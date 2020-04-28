@@ -19,6 +19,8 @@ Standard work flow:
 Left-before image
 Right-after image
 
+![Image before](https://github.com/ntomen/ROI_crop/readme/original_image.tif)
+
 Describe how it should be run.
 
 ## 3. Optional input arguments
