@@ -29,14 +29,22 @@ Working directory before running ROI_crop.py  |   Working directory after runnin
 
 The above example shows only one .tif file from which the ROIs are extracted but the script will loop through all images of the .tif/.tiff format in the directory where `ROI_crop.py` is placed, and crop out all the ROIs in a similar way.
 
+To run `ROI_crop.py` with the default settings, it sufficient to navigate on the terminal/command prompt (depending on your OS) to the directory where the collection of .tif/.tiff images and `ROI_crop.py` are located, and execute
+
+    python ROI_crop.py
+
 For non-default settings and detailed usage guidelines, please see the next sections about optional input arguments and setup & usage directions.
 
 ## 3. Optional input arguments
 
 ### bg_opacity
-Standard work flow:
-Left-before image
-Right-after image
+By default `ROI_crop.py` maps the pixels outside of the ROI ('background') to a white color ([255,255,255] in RGB space). Similarly, the red contours, both inside and surrounding the ROI, will be set to white.
+
+Therefore, by default the background is kept opaque. If instead it is desirable to set the the background and the red annotation pixels to transparent (by setting alpha=0), rather than setting their color to white, the option --bg_opacity can be set to False.
+
+    python ROI_crop.py --bg_opacity=False
+
+Default value: True. Note: When set to False, the script will save the tif files in RGBA format (bit depth 32), instead of RGB (bit depth 24).')
 
 ### contours in contours
 Standard work flow:
