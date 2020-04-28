@@ -21,6 +21,10 @@ Right-after image
 
 ![Image before](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image.png)
 
+but also
+
+![Image after](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1.tif)
+
 Describe how it should be run.
 
 ## 3. Optional input arguments
