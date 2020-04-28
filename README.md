@@ -44,6 +44,8 @@ Left-before image
 Right-after image
 The contours_in_contours algorithm adopts a modified version of the [Scan-flood Fill (SCAFF)](https://github.com/SherylHYX/Scan-flood-Fill) algorithm.
 
+### bg_color
+
 ### save directory
 
 ## 4. Setup & Usage Directions
