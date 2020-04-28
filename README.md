@@ -37,7 +37,7 @@ For non-default settings and detailed usage guidelines, please see the next sect
 
 ## 3. Optional input arguments
 
-### bg_opacity
+### background opacity
 By default `ROI_crop.py` maps the pixels outside of the ROI ('background') to a white color ([255,255,255] in RGB space). Similarly, the red contours, both inside and surrounding the ROI, will be set to white.
 
 Therefore, by default the background is kept opaque. If instead it is desirable to set the the background and the red annotation pixels to transparent (by setting alpha=0), rather than setting their color to white, the option --bg_opacity can be set to False.
@@ -66,7 +66,7 @@ Default value: `False`. By default the script will ignore annotations within the
 
 The contours_in_contours algorithm adopts a modified version of the [Scan-flood Fill (SCAFF)](https://github.com/SherylHYX/Scan-flood-Fill) algorithm.
 
-### bg_color
+### background color
 When the background color is opaque (`--bg_opacity=False`) the default behaviour is to set the background color to white. A different background color can be specified using the `--bg_color` option.
 
 The `--bg_color` argument admits inputs in RGB format, so 3 integer values in range [0,255] need to be passed as input arguments. For example, to get a black background call
