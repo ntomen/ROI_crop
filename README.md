@@ -15,15 +15,14 @@ If you use the contents of this repository, please give credit to this github pa
 ## 2. How it works
 The python script is meant to be placed in a directory with multiple annotated biomedical images in .tif/.tiff format, with red lines encircling regions of interest (ROIs). Running the script will crop out each ROI into its own .tif image against a white/transparent background.
 
-Standard work flow:
-Left-before image
-Right-after image
+An example of a crop with default options:
 
 Original image                 |         Cropped ROI 1        |         Cropped ROI 2
 :-----------------------------:|:----------------------------:|:-----------------------------:
 ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2.png)
 
-Describe how it should be run.
+Running the script with default options will take an original image , e.g. `original_image.tif`, and crop each of the ROIs into its individual tif file, with white background. By default a subdirectory called `cropped_images` will be created where the cropped images will be saved with the name of the original image file followed by the ROI index, e.g. `original_image_1.tif`.
+![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2.png)
 
 ## 3. Optional input arguments
 
