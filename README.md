@@ -40,11 +40,11 @@ For non-default settings and detailed usage guidelines, please see the next sect
 ### background opacity
 By default `ROI_crop.py` maps the pixels outside of the ROI ('background') to a white color ([255,255,255] in RGB space). Similarly, the red contours, both inside and surrounding the ROI, will be set to white.
 
-Therefore, by default the background is kept opaque. If instead it is desirable to set the the background and the red annotation pixels to transparent (by setting alpha=0), rather than setting their color to white, the option --bg_opacity can be set to False.
+Therefore, by default the background is kept opaque. If instead it is desirable to set the the background and the red annotation pixels to transparent (by setting alpha=0), rather than setting their color to white, the option `--bg_opacity` can be set to `False`.
 
     python ROI_crop.py --bg_opacity=False
 
-Default value: `True`. Note: When set to False, the script will save the tif files in RGBA format (bit depth 32), instead of RGB (bit depth 24).')
+Default value: `True`. Note: When set to `False`, the script will save the tif files in RGBA format (bit depth 32), instead of RGB (bit depth 24).')
 
 Cropped ROI 1 on transparent background |  Cropped ROI 2 onto transparent background|  How ROI 1 looks on non-white background
 :----------------------------:|:-----------------------------:|:----:
