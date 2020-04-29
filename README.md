@@ -27,9 +27,9 @@ Working directory before running ROI_crop.py  |   Working directory after runnin
 :--------------------------------------------:|:----------------------------------------------:
 ![](https://github.com/ntomen/ROI_crop/blob/master/readme/dir_before.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/dir_after.png)
 
-The above example shows only one .tif file from which the ROIs are extracted but the script will loop through all images of the .tif/.tiff format in the directory where `ROI_crop.py` is placed, and crop out all the ROIs in a similar way.
+The above example shows only one .tif file from which the ROIs are extracted but the script will loop through all images of the .tif/.tiff format in the directory where `ROI_crop.py` is placed, and crop out all the ROIs in the same manner.
 
-To run `ROI_crop.py` with the default settings, it sufficient to navigate on the terminal/command prompt (depending on your OS) to the directory where the collection of .tif/.tiff images and `ROI_crop.py` are located, and call
+To run `ROI_crop.py` with the default settings, it is sufficient to navigate on the terminal/command prompt (depending on your OS) to the directory where the collection of .tif/.tiff images and `ROI_crop.py` are located, and call
 
     python ROI_crop.py
 
@@ -44,9 +44,9 @@ Therefore, by default the background is kept opaque. If instead it is desirable 
 
     python ROI_crop.py --bg_opacity=False
 
-Default value: `True`. Note: When set to `False`, the script will save the tif files in RGBA format (bit depth 32), instead of RGB (bit depth 24).')
+Default value: `True`. Note: When set to `False`, the script will save the .tif files in RGBA format (bit depth 32), instead of RGB (bit depth 24).
 
-Cropped ROI 1 on transparent background |  Cropped ROI 2 onto transparent background|  How ROI 1 looks on non-white background
+Cropped ROI 1 on transparent background |  Cropped ROI 2 on transparent background|  How the crops look on non-white background
 :----------------------------:|:-----------------------------:|:----:
  ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1_transparent.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2_transparent.png) |    ![](https://github.com/ntomen/ROI_crop/blob/master/readme/transparent_eg.png) -------------------------------------------------------for example if you open it in photoshop
 	
@@ -60,7 +60,7 @@ To change this behaviour please use the `--contours_in_contours` option.
 
     python ROI_crop.py --contours_in_contours=True
 
-When `True` the algorithm will scan for concentric contours and will exclude regions within the ROI annotated by red closed contours from the crop. This option may be useful when manually removing regions within the ROI, such as visible blood vessels, is desirable.
+When `True` the algorithm will scan for concentric contours and will exclude regions within the ROI annotated by red closed contours from the crop. This option may be useful when manually removing regions within the ROI, such as visible blood vessels, if desired.
 
 Default value: `False`. By default the script will ignore annotations within the ROI and delete the red lines marking them as described above. Note: When set to `True`, a rather slow scanning operation will be used. The scan is estimated to take 2-10 minutes to process a single image of 10000x10000 resolution.
 
@@ -87,11 +87,13 @@ Default behaviour (white background) |  Black background|  Green background
  ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2_bg_black.png) |    ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2_bg_green.png)
  
 ### save directory
+As explained above in section 2, the cropped .tif files will be saved default in a subdirectory called `cropped_images`. Optionally, you could specify the name of the subdirectory where the .tif files should be saved. If the subdirectory does not exist in the current working directory, it will be automatically created.
 
-parser.add_argument('--save_dir',type=str,default='cropped_images',
-                    help='Name of the subdirectory which will be created '+\
-                    'at the script location, where the cropped images will '+\
-                    'be saved. Default: \'cropped_images\'.')
+To specify the save directory, please use the `--save_dir` option.
+
+    python ROI_crop.py --save_dir=cropped_ROIs
+
+Default value: `cropped_images`
 
 ## 4. Setup & Usage Directions
 
