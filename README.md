@@ -123,7 +123,7 @@ In Windows, you may have to also call
 
 Download the script `ROI_crop.py` and put it in a directory together with the TIFF images with annotations. Tip: You may first want to test with 2-3 images in a directory, and check for errors as well as measure execution time which is especially important if you want to use the contous_in_contours option.
 
-Next navigate to the directory containing the images to be processed and the script on the command prompt/terminal. For an example in Windows, let's say the .tif files as well as `ROI_crop.py` are now located in `C:\Users\Nergis\Documents\work\all_images`. This means after you open command prompt you need to type `cd Documents\work\all_images` and press Enter.
+Next navigate to the directory containing the images to be processed and the script on the command prompt/terminal. For an example in Windows, let's say the .tif files as well as `ROI_crop.py` are now located in `C:\Users\Nergis\Documents\work\all_images`. This means after you open command prompt you need to type <code>cd&nbsp;Documents\work\all_images</code> and press Enter.
 
 Once you're in the directory `all_images` just call
 
