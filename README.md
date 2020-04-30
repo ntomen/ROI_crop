@@ -97,6 +97,40 @@ Default value: `cropped_images`
 
 ## 4. Setup & Usage Directions
 
+### Setup
+
+To run this script, you need a python installation. You can follow the instructions [here](https://realpython.com/installing-python) based on your OS. The instructions are up-to-date as of April 30, 2020.
+
+Once you have python set up, you need to install some image processing libraries. This is straightforward using 'pip', which should be installed together with python. To check if you have pip installed on a Windows OS, you can type 'cmd' to into the search bar in the Start menu, and then click on Command Prompt. In command prompt, you can type:
+
+    pip --version
+
+For Linux, just enter it in the terminal.
+
+If you don't get an error msg, and the pip version is printed you can continue with package installations. (Otherwise please install pip or another package manager like Anaconda).
+
+To install the libraries, open to the command prompt/terminal again and call
+
+    python3 -m pip install --upgrade pip
+    pip install opencv-python
+    pip install numpy
+
+In Windows, you may have to also call
+
+    python3 -m pip install --upgrade Pillow
+
+### Usage
+
+Download the script `ROI_crop.py` and put it in a directory together with the TIFF images with annotations. Tip: You may first want to test with 2-3 images in a directory, and check for errors as well as measure execution time which is especially important if you want to use the contous_in_contours option.
+
+Next navigate to the directory with the images to be processed and the script on the command prompt/terminal. For an example in Windows, let's say the .tif files as well as `ROI_crop.py` are now located in `C:\Users\Andrea\Documents\work\all_images`. This means after you open command prompt you need to type `cd Documents\work\all_images` and press Enter.
+
+Once you're in the directory `all_images` just call
+
+    python ROI_crop.py
+
+to execute the script with default settings. To run it with optional settings, please see Section 3 above.
+
 ## Authors
 
 * **Nergis Tomen** - [TU Delft](https://www.tudelft.nl/en/eemcs/the-faculty/departments/intelligent-systems/pattern-recognition-bioinformatics/computer-vision-lab/people/nergis-toemen/) - [github](https://github.com/ntomen)
