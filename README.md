@@ -101,7 +101,7 @@ Default value: `cropped_images`
 
 To run this script, you need a python installation. You can follow the instructions [here](https://realpython.com/installing-python) based on your OS. The instructions are up-to-date as of April 30, 2020.
 
-Once you have python set up, you need to install some image processing libraries. This is straightforward using 'pip', which should be installed together with python. To check if you have pip installed on a Windows OS, you can type 'cmd' to into the search bar in the Start menu, and then click on Command Prompt. In command prompt, you can type:
+Once you have python set up, you need to install some image processing libraries. This is straightforward using 'pip', which should automatically be installed together with the python installation. To check if you have pip installed on a Windows OS, you can type 'cmd' to into the search bar in the Start menu, and then click on Command Prompt. In command prompt, you can type:
 
     pip --version
 
