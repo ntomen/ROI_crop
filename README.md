@@ -48,7 +48,7 @@ Default value: `True`. Note: When set to `False`, the script will save the .tif 
 
 Cropped ROI 1 on transparent background |  Cropped ROI 2 on transparent background|  How the crops look on non-white background
 :----------------------------:|:-----------------------------:|:----:
- ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1_transparent.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2_transparent.png) |    ![](https://github.com/ntomen/ROI_crop/blob/master/readme/transparent_eg.png) -------------------------------------------------------for example if you open it in photoshop
+ ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_1_transparent.png) | ![](https://github.com/ntomen/ROI_crop/blob/master/readme/original_image_ROI_2_transparent.png) |    ![](https://github.com/ntomen/ROI_crop/blob/master/readme/transparent_eg.png) for example if you open it in photoshop
 	
 
 
