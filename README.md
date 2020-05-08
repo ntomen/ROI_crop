@@ -35,6 +35,8 @@ To run `ROI_crop.py` with the default settings, it is sufficient to navigate on 
 
 For non-default settings and detailed usage guidelines, please see the next sections about optional input arguments and setup & usage directions.
 
+Note: The script is intended to work only with complete ROI annotations within the TIFF images (i.e. all red annotations/contours must be closed and ROI should not be divided by the borders of the image). Otherwise, the script will show unexpected behaviour.
+
 ## 3. Optional input arguments
 
 ### background opacity
