@@ -89,9 +89,9 @@ for file_name in file_names:
     #--------------------------------------------------------------------
     # Extract the red contour lines
     # Encoding RGB, dim 0 = R
-    is_red=imarray[:,:,0]>245
-    is_not_green=imarray[:,:,1]<10
-    is_not_blue=imarray[:,:,2]<10
+    is_red=imarray[:,:,0]>210
+    is_not_green=imarray[:,:,1]<60
+    is_not_blue=imarray[:,:,2]<60
     is_contour=np.logical_and(np.logical_and(is_red,is_not_green),is_not_blue)
     
     mask_contour=np.zeros_like(imarray[:,:,0])
@@ -207,13 +207,35 @@ for file_name in file_names:
             imarray_extract[:,:,3]=hc_filled
             imarray_extract[:,:,3]*=(-smooth_mask_contour.astype(np.uint8)+1)
             imarray_extract[:,:,3]*=255
+        
         # Crop
         b=5 # white border pixel width
-        crop_save=imarray_extract[component_stats[i,1]-b:component_stats[i,1]+\
-                          component_stats[i,3]+b,\
-                          component_stats[i,0]-b:component_stats[i,0]+\
-                          component_stats[i,2]+b,:]
+        if args.bg_opacity:
+            # Padding with white or color
+            if args.bg_color is None:
+                imarray_extract=np.pad(imarray_extract,((b,b),(b,b),(0,0)),\
+                               mode='constant',constant_values=255)
+            else:
+                h_imarray_extract=np.zeros_like(imarray_extract)
+                h_imarray_extract=np.pad(h_imarray_extract,((b,b),(b,b),(0,0)),\
+                               mode='constant',constant_values=0)
+                for j in range(imarray_extract.shape[-1]):
+                    h_imarray_extract[:,:,j]=np.pad(imarray_extract[:,:,j],b,\
+                             mode='constant',constant_values=args.bg_color[j])
+                imarray_extract=h_imarray_extract
+                del h_imarray_extract
+        else:
+            # Padding with alpha=0
+            imarray_extract=np.pad(imarray_extract,((b,b),(b,b),(0,0)),\
+                               mode='constant',constant_values=0)
+
+        # Cropping
+        crop_save=imarray_extract[component_stats[i,1]:component_stats[i,1]+\
+                      component_stats[i,3]+2*b,\
+                      component_stats[i,0]:component_stats[i,0]+\
+                      component_stats[i,2]+2*b,:]
     
+        # Make image and save
         if args.bg_opacity:
             crop_save=Image.fromarray(crop_save,'RGB')
         else:
@@ -223,4 +245,5 @@ for file_name in file_names:
         save_path=os.path.join(os.getcwd(),args.save_dir,save_fname)
         
         crop_save.save(save_path)
-
+    
+    
