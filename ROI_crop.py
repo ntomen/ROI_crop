@@ -90,8 +90,8 @@ for file_name in file_names:
     # Extract the red contour lines
     # Encoding RGB, dim 0 = R
     is_red=imarray[:,:,0]>210
-    is_not_green=imarray[:,:,1]<60
-    is_not_blue=imarray[:,:,2]<60
+    is_not_green=imarray[:,:,1]<70
+    is_not_blue=imarray[:,:,2]<70
     is_contour=np.logical_and(np.logical_and(is_red,is_not_green),is_not_blue)
     
     mask_contour=np.zeros_like(imarray[:,:,0])
